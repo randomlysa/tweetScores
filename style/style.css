@@ -1,0 +1,10 @@
+.half-width {
+    width: 49%;
+    float: left;
+}
+
+button {
+    padding: 15px;
+    margin-right: 10px;
+    color: red;
+}
