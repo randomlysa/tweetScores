@@ -5,6 +5,16 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions'
 
 class TeamAndScore extends Component {
+    constructor(props) {
+        super(props);
+
+        this.updateTeamName = this.updateTeamName.bind(this);
+    }
+
+    updateTeamName = (e) => {
+        this.props.actions.updateTeamName(this.props.teamId, e.target.value)
+        console.log(e.target.value)
+    }
 
     componentDidMount() {
     }
@@ -16,14 +26,20 @@ class TeamAndScore extends Component {
 
         let score;
         if (teamId === 'home') {
+            teamName = this.props.teamsAndScores.homeTeamName;
             score = this.props.teamsAndScores.homeScore;
         } else {
+            teamName = this.props.teamsAndScores.awayTeamName;
             score = this.props.teamsAndScores.awayScore;
         }
 
         return (
-            <div>
-                <h2>{teamName}</h2>
+            <div className="half-width">
+                <h2>
+                    <input type="text" value={teamName} id={teamId}
+                        onChange={this.updateTeamName}
+                    />
+                </h2>
                 <h2>Score: {score}</h2>
 
                 <button

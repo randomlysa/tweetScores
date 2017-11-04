@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import ScoreReducer from './reducer_score';
+import ScoreReducer from './reducer_scoreAndTeamName';
 
 const rootReducer = combineReducers({
   teamsAndScores: ScoreReducer
