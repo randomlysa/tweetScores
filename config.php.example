@@ -1,7 +1,14 @@
 <?php
 
+// For Twitter.
 define(CONSUMER_KEY, 'KEY_HERE');
 define(CONSUMER_SECRET, 'SECRET_HERE');
 define(OAUTH_CALLBACK, "http://CALLBACK_HERE/callback.php");
+
+// For MySQL DB.
+define(DB_HOST, 'HOST');
+define(DB_USERNAME, 'USERNAME');
+define(DB_PASSWORD, 'PASSWORD');
+define(DB_DBNAME, 'DBNAME');
 
 ?>
