@@ -4,6 +4,7 @@ import {
 } from '../actions/index';
 
 import { loadState, saveState } from '../manageLocalStorage';
+import $ from 'jquery';
 
 let initialState;
 
@@ -37,6 +38,18 @@ export default function(state = initialState, action) {
                 let newAwayScore = awayScore + parseInt(action.payload.score);
                 newState = { ...state, awayScore: newAwayScore };
             }
+
+            $.ajax({
+                type: "POST",
+                url: 'http://code.randomlysa.com/tweetScores/db.php',
+                data: newState
+              })
+              .then(function (response) {
+                console.log(response);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
 
             saveState(newState)
             return newState;
