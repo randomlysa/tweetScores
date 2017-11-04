@@ -1,0 +1,7 @@
+<?php
+
+define(CONSUMER_KEY, 'KEY_HERE');
+define(CONSUMER_SECRET, 'SECRET_HERE');
+define(OAUTH_CALLBACK, "http://CALLBACK_HERE/callback.php");
+
+?>
