@@ -23,14 +23,17 @@ class TeamAndScore extends Component {
 
         let teamName = this.props.teamName;
         let teamId = this.props.teamId;
+        let tabIndex;
 
         let score;
         if (teamId === 'home') {
             teamName = this.props.teamsAndScores.homeTeamName;
             score = this.props.teamsAndScores.homeScore;
+            tabIndex = 1;
         } else {
             teamName = this.props.teamsAndScores.awayTeamName;
             score = this.props.teamsAndScores.awayScore;
+            tabIndex = 2;
         }
 
         const mainDivClass = `${teamId} half-width`;
@@ -40,6 +43,7 @@ class TeamAndScore extends Component {
                 <h2>
                     <input type="text" value={teamName} id={teamId}
                         onChange={this.updateTeamName}
+                        tabIndex={tabIndex}
                     />
                 </h2>
                 <h2>Score: {score}</h2>
