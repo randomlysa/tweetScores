@@ -33,8 +33,10 @@ class TeamAndScore extends Component {
             score = this.props.teamsAndScores.awayScore;
         }
 
+        const mainDivClass = `${teamId} half-width`;
+
         return (
-            <div className="half-width">
+            <div className={mainDivClass}>
                 <h2>
                     <input type="text" value={teamName} id={teamId}
                         onChange={this.updateTeamName}

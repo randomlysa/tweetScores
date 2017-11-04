@@ -3,6 +3,21 @@
     float: left;
 }
 
+.div-center {
+    text-align: center;
+}
+
+.group:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.footer {
+    background-color: red;
+    margin-top: 20px;
+}
+
 button {
     padding: 15px;
     margin-right: 10px;
