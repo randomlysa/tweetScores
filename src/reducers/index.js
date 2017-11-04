@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import ScoreReducer from './reducer_score';
 
 const rootReducer = combineReducers({
-  score: ScoreReducer
+  teamsAndScores: ScoreReducer
 });
 
 export default rootReducer;

@@ -16,9 +16,9 @@ class TeamAndScore extends Component {
 
         let score;
         if (teamId === 'home') {
-            score = this.props.score[0];
+            score = this.props.teamsAndScores.homeScore;
         } else {
-            score = this.props.score[1];
+            score = this.props.teamsAndScores.awayScore;
         }
 
         return (
@@ -63,9 +63,9 @@ class TeamAndScore extends Component {
 }
 
 // Gets info from state.
-function mapStateToProps({ score }) {
-   // Todo: why is score under "score.score".
-    return { score: score.score };
+function mapStateToProps({ teamsAndScores }) {
+    // Should be same as reducer.
+    return { teamsAndScores };
 }
 
 function mapDispatchToProps(dispatch) {
