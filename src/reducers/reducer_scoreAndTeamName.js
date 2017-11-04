@@ -10,7 +10,11 @@ let initialState;
 
 // No state in local storage, use default.
 if (!loadState()) {
+
+    const gameid = Math.floor(Math.random()*123456799)
+
     initialState = {
+        gameid: gameid,
         homeTeamName: 'Home Team',
         awayTeamName: 'Away Team',
         homeScore: 0,
