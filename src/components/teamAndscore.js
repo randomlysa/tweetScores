@@ -5,29 +5,42 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions'
 
 class TeamAndScore extends Component {
-  render(props) {
+
+    componentDidMount() {
+        }
+
+
+    render(props) {
 
     let teamName = this.props.teamName;
+    let teamId = this.props.teamId;
+
+    let score;
+    if (teamId === 'home') {
+        score = this.props.score[0];
+    } else {
+        score = this.props.score[1];
+    }
 
     return (
     <div>
         <h2>{teamName}</h2>
-        <h2>Score: </h2>
+        <h2>Score: {score}</h2>
 
         <button
-            onClick={this.props.actions.updateScore.bind(this, teamName, "+2")}
+            onClick={this.props.actions.updateScore.bind(this, teamId, "+2")}
         >
             +2
         </button>
 
         <button
-            onClick={this.props.actions.updateScore.bind(this, teamName, "+3")}
+            onClick={this.props.actions.updateScore.bind(this, teamId, "+3")}
         >
             +3
         </button>
 
         <button
-            onClick={this.props.actions.updateScore.bind(this, teamName, "+1")}
+            onClick={this.props.actions.updateScore.bind(this, teamId, "+1")}
         >
             +1
         </button>
@@ -35,13 +48,13 @@ class TeamAndScore extends Component {
         <br />
 
         <button
-            onClick={this.props.actions.updateScore.bind(this, teamName, "-1")}
+            onClick={this.props.actions.updateScore.bind(this, teamId, "-1")}
         >
             -1
         </button>
 
         <button
-            onClick={this.props.actions.updateScore.bind(this, teamName, "-2")}
+            onClick={this.props.actions.updateScore.bind(this, teamId, "-2")}
         >
             -2
         </button>
@@ -52,7 +65,8 @@ class TeamAndScore extends Component {
 
 // Gets info from state.
 function mapStateToProps({ score }) {
-    return { score }; // same as { score: score}
+   // Todo: why is score under "score.score".
+    return { score: score.score };
 }
 
 function mapDispatchToProps(dispatch) {

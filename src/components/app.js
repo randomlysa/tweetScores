@@ -8,11 +8,17 @@ export default class App extends Component {
       <div>
         <h1>Live Tweet Scores</h1>
           <div className="half-width">
-            <TeamAndScore teamName="AAAAA" />
+            <TeamAndScore
+              teamName="AAAAA"
+              teamId="home"
+            />
           </div>
 
           <div className="half-width">
-            <TeamAndScore teamName="BBBBB" />
+            <TeamAndScore
+              teamName="BBBBB"
+              teamId="away"
+            />
           </div>
         </div>
     );
