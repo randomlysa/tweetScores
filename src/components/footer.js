@@ -26,6 +26,8 @@ class Footer extends Component {
     }
 
     render(props) {
+        const apiLink = `http://code.randomlysa.com/tweetScores/php/api.php?gameid=${this.props.teamsAndScores.gameid}`;
+
         if (this.props.teamsAndScores.twitterAuth) {
             return (
                 <div className="footer div-center">
@@ -33,6 +35,7 @@ class Footer extends Component {
                     <button onClick={this.sendTweet.bind(this)}>Tweet Score</button><br />
                     <button onClick={clearStorage}>Delete all data</button>
                     <button onClick={this.props.actions.unauthTwitter}>remove twitter authorization</button>
+                    <a href={apiLink}>Game Info in JSON Format</a>
                 </div>
             );
         } else {
@@ -41,7 +44,7 @@ class Footer extends Component {
                     <a href="http://code.randomlysa.com/tweetScores/php/twitterAuth.php">
                         <button>Authorize with Twitter.</button>
                     </a>
-
+                    <a href={apiLink}>Game Info in JSON Format</a>
                     <button onClick={clearStorage}>Delete all data</button>
                 </div>
             );
