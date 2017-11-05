@@ -58,10 +58,16 @@ if ($doesClientIDExist == 0) {
 }
 ?>
 
-<html><head><title></title></head>
+<html><head><title>TweetScores Twitter Authentication</title>
+    <meta http-equiv="refresh" content="3; URL=http://code.randomlysa.com/tweetScores/" />
+</head>
 <body>
 <script>
-    localStorage.setItem('tweetScoreClientId', '<?php echo $clientid ?>');
+    const state = JSON.parse(localStorage.getItem('score'));
+    const newState = { ...state, 'twitterAuth': '<?php echo $clientid; ?>' };
+    localStorage.setItem('score', JSON.stringify(newState));
 </script>
+    Login Successful! You will be redirected to the home page soon. <br>
+    If not, <a href="/tweetScores/">click here.</a>
 </body>
 </html>
