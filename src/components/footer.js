@@ -4,17 +4,33 @@ import { clearStorage } from '../manageLocalStorage';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actionCreators from '../actions'
+import * as actionCreators from '../actions';
+import $ from 'jquery';
 
 class Footer extends Component {
-    render(props) {
 
-        console.log(this.props)
+    sendTweet(props) {
+        const info = this.props.teamsAndScores;
+        const tweet = `${info.homeTeamName}: ${info.homeScore} | ${info.awayTeamName}: ${info.awayScore}`;
+
+        $.ajax({
+            type: 'POST',
+            url: 'http://code.randomlysa.com/tweetScores/tweet.php',
+            data: {newTweet: tweet}
+        }).then(function(data){
+            console.log(data);
+        }).catch(function(e){
+            console.log(e);
+        })
+    }
+
+    render(props) {
 
         if (this.props.teamsAndScores.twitterAuth) {
             return (
                 <div className="footer div-center">
-                    Authorized with Twitter.
+                    Authorized with Twitter. <br />
+                    <button onClick={this.sendTweet.bind(this)}>Tweet Score</button><br />
                     <button onClick={clearStorage}>Delete all data</button>
                 </div>
             );
