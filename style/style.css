@@ -14,12 +14,11 @@
 }
 
 .footer {
-    background-color: red;
-    margin-top: 20px;
+    border-top: solid 1px #000;
+    margin-top: 50px;
+    padding-top: 15px;
 }
 
 button {
     padding: 15px;
-    margin-right: 10px;
-    color: red;
 }
