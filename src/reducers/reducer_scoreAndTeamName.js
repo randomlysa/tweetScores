@@ -50,7 +50,7 @@ export default function(state = initialState, action) {
 
             $.ajax({
                 type: "POST",
-                url: 'http://code.randomlysa.com/tweetScores/db.php',
+                url: 'http://code.randomlysa.com/tweetScores/updateGameInfoInDB.php',
                 data: newState
               })
               .then(function (response) {
