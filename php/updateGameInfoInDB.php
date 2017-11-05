@@ -17,17 +17,19 @@ if ($mysqli->connect_error) {
 }
 
 $gameid = $_POST["gameid"];
+$clientid = $_POST["twitterAuth"];
 $homeTeamName = $_POST["homeTeamName"];
 $homeScore = $_POST["homeScore"];
 $awayTeamName = $_POST["awayTeamName"];
 $awayScore = $_POST["awayScore"];
+
 
 // Check if gameid exists (determine insert or update.)
 $checkGameId = $mysqli->query("SELECT * FROM tweetScores WHERE `gameid` = $gameid");
 $doesGameIDExist = $checkGameId->num_rows;
 
 if ($doesGameIDExist == 0) {
-    $insert_row = $mysqli->query("INSERT INTO tweetScores(`gameid`, `homeTeamName`, `homeScore`, `awayTeamName`, `awayScore`) VALUES('$gameid', '$homeTeamName', '$homeScore', '$awayTeamName', '$awayScore')");
+    $insert_row = $mysqli->query("INSERT INTO tweetScores(`gameid`, `clientid`, `homeTeamName`, `homeScore`, `awayTeamName`, `awayScore`) VALUES('$gameid', '$clientid', '$homeTeamName', '$homeScore', '$awayTeamName', '$awayScore')");
 
     if($insert_row){
         print $mysqli->insert_id;
