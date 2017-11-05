@@ -10,9 +10,27 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 // Key, secret, callback.
 require("config.php");
 
-// Todo: works with hard coded, need to fetch from DB.
-// $oauth_token = '';
-// $token_secret = '';
+$clientid = $_GET["clientid"];
+
+// Connect.
+$mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DBNAME);
+
+// Output any connection error.
+if ($mysqli->connect_error) {
+    die('Error : ('. $mysqli->connect_errno .') '. $mysqli->connect_error);
+} else {
+    // print "Connected OK.";
+}
+
+$getTokenSecret = $mysqli->query("SELECT * FROM `tweetClients` WHERE `clientid` = '$clientid'");
+if(!$getTokenSecret){
+    die('Error : ('. $mysqli->errno .') '. $mysqli->error);
+}
+
+while ($row = $getTokenSecret->fetch_assoc()) {
+    $oauth_token  = $row['oauth_token'];
+    $token_secret = $row['oauth_token_secret'];
+}
 
 $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $oauth_token, $token_secret);
 

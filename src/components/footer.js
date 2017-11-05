@@ -12,10 +12,11 @@ class Footer extends Component {
     sendTweet(props) {
         const info = this.props.teamsAndScores;
         const tweet = `${info.homeTeamName}: ${info.homeScore} | ${info.awayTeamName}: ${info.awayScore}`;
+        const clientid = this.props.teamsAndScores.twitterAuth;
 
         $.ajax({
             type: 'POST',
-            url: 'http://code.randomlysa.com/tweetScores/php/tweet.php',
+            url: 'http://code.randomlysa.com/tweetScores/php/tweet.php?clientid=' + clientid,
             data: {newTweet: tweet}
         }).then(function(data){
             console.log(data);
