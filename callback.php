@@ -22,10 +22,46 @@ if (isset($_REQUEST['oauth_token']) && $request_token['oauth_token'] !== $_REQUE
 $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $request_token['oauth_token'], $request_token['oauth_token_secret']);
 
 // At this point we will use the temporary request token to get the long lived access_token that authorized to act as the user.
-$access_token = $connection->oauth("oauth/access_token", ["oauth_verifier" => $_REQUEST['oauth_verifier']]);
+$getAccessToken = $connection->oauth("oauth/access_token", ["oauth_verifier" => $_REQUEST['oauth_verifier']]);
+
+// Set some variables.
+$access_token = $getAccessToken['oauth_token'];
+$token_secret = $getAccessToken['oauth_token_secret'];
+$clientid = sha1($access_token . $token_secret);
+
 
 // Save access_token['oauth_token'] and access_token['oauth_token_secret']
-print $access_token['oauth_token'];
-print "<br>";
-print $access_token['oauth_token_secret'];
+// Get info from config.php.
+require('config.php');
+// Connect.
+$mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DBNAME);
+
+// Check if clientid exists.
+$checkClientId = $mysqli->query("SELECT * FROM tweetClients WHERE `clientid` = '$clientid'");
+if(!$checkClientId){
+    die('Error : ('. $mysqli->errno .') '. $mysqli->error);
+}
+
+$doesClientIDExist = $checkClientId->num_rows;
+
+// Client doesn't exist in DB. Save.
+if ($doesClientIDExist == 0) {
+    $saveInfo = $mysqli->query("INSERT INTO tweetClients(`clientid`, `oauth_token`, `oauth_token_secret`) VALUES('$clientid', '$access_token', '$token_secret')");
+    if($saveInfo){
+        // Don't do anything.
+    } else {
+        die('Error : ('. $mysqli->errno .') '. $mysqli->error);
+    }
+// Client exists in DB.
+} else {
+    // print "Client exists in DB.";
+}
 ?>
+
+<html><head><title></title></head>
+<body>
+<script>
+    localStorage.setItem('tweetScoreClientId', '<?php echo $clientid ?>');
+</script>
+</body>
+</html>

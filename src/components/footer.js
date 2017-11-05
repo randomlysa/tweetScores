@@ -11,11 +11,24 @@ class Footer extends Component {
 
         console.log(this.props)
 
-        return (
-            <div className="footer div-center">
-                <button onClick={clearStorage}>Delete all data</button>
-            </div>
-        );
+        if (this.props.teamsAndScores.twitterAuth) {
+            return (
+                <div className="footer div-center">
+                    Authorized with Twitter.
+                    <button onClick={clearStorage}>Delete all data</button>
+                </div>
+            );
+        } else {
+            return (
+                <div className="footer div-center">
+                    <a href="http://code.randomlysa.com/tweetScores/twitterAuth.php">
+                        <button>Authorize with Twitter.</button>
+                    </a>
+
+                    <button onClick={clearStorage}>Delete all data</button>
+                </div>
+            );
+        }
     }
 }
 

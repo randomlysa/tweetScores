@@ -24,7 +24,7 @@ $_SESSION['oauth_token_secret'] = $request_token['oauth_token_secret'];
 // Build authorize URL.
 $url = $connection->url('oauth/authorize', array('oauth_token' => $request_token['oauth_token']));
 
-// Show authorize URL.
-print "<a href={$url}>Authorize on twitter.com</a>";
+// Redirect to twitter auth url.
+header ("Location: $url");
 
 ?>
