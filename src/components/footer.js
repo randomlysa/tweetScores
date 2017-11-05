@@ -15,7 +15,7 @@ class Footer extends Component {
 
         $.ajax({
             type: 'POST',
-            url: 'http://code.randomlysa.com/tweetScores/tweet.php',
+            url: 'http://code.randomlysa.com/tweetScores/php/tweet.php',
             data: {newTweet: tweet}
         }).then(function(data){
             console.log(data);
@@ -37,7 +37,7 @@ class Footer extends Component {
         } else {
             return (
                 <div className="footer div-center">
-                    <a href="http://code.randomlysa.com/tweetScores/twitterAuth.php">
+                    <a href="http://code.randomlysa.com/tweetScores/php/twitterAuth.php">
                         <button>Authorize with Twitter.</button>
                     </a>
 

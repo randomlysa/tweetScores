@@ -1,7 +1,7 @@
 <?php
 
 // Include library.
-require "twitteroauth/autoload.php";
+require "./twitteroauth/autoload.php";
 use Abraham\TwitterOAuth\TwitterOAuth;
 
 // Key, secret, callback.
