@@ -1,5 +1,6 @@
 export const UPDATE_SCORE = 'UPDATE_SCORE';
 export const UPDATE_TEAM_NAME = 'UPDATE_TEAM_NAME';
+export const UNAUTH_TWITTER = 'UNAUTH_TWITTER';
 
 export function updateScore(teamId, scoreUpdate) {
     return {
@@ -19,5 +20,11 @@ export function updateTeamName(teamId, newTeamName) {
             teamId: teamId,
             newTeamName: newTeamName
         }
+    }
+}
+
+export function unauthTwitter() {
+    return {
+        type: UNAUTH_TWITTER
     }
 }

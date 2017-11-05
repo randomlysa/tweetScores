@@ -26,13 +26,13 @@ class Footer extends Component {
     }
 
     render(props) {
-
         if (this.props.teamsAndScores.twitterAuth) {
             return (
                 <div className="footer div-center">
                     Authorized with Twitter. <br />
                     <button onClick={this.sendTweet.bind(this)}>Tweet Score</button><br />
                     <button onClick={clearStorage}>Delete all data</button>
+                    <button onClick={this.props.actions.unauthTwitter}>remove twitter authorization</button>
                 </div>
             );
         } else {

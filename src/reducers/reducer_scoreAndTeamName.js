@@ -1,6 +1,7 @@
 import {
     UPDATE_SCORE,
-    UPDATE_TEAM_NAME
+    UPDATE_TEAM_NAME,
+    UNAUTH_TWITTER
 } from '../actions/index';
 
 import { loadState, saveState } from '../manageLocalStorage';
@@ -72,6 +73,11 @@ export default function(state = initialState, action) {
             }
 
             saveState(newState)
+            return newState;
+
+        case UNAUTH_TWITTER:
+            newState =  { ...state, twitterAuth: false };
+            saveState(newState);
             return newState;
 
         default:
