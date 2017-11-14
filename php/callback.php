@@ -63,9 +63,13 @@ if ($doesClientIDExist == 0) {
 </head>
 <body>
 <script>
-    const state = JSON.parse(localStorage.getItem('score'));
+    let state;
+    if (localStorage.getItem('score')) {
+        state = JSON.parse(localStorage.getItem('score'));
+    }
     const newState = { ...state, 'twitterAuth': '<?php echo $clientid; ?>' };
     localStorage.setItem('score', JSON.stringify(newState));
+
 </script>
     Login Successful! You will be redirected to the home page soon. <br>
     If not, <a href="/tweetScores/">click here.</a>
