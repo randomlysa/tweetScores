@@ -38,8 +38,10 @@ $newTweet = $_POST["newTweet"];
 
 if ($newTweet) {
     $statues = $connection->post("statuses/update", ["status" => $newTweet]);
+    $results = array('result' => 'success', 'tweet' => $newTweet);
 } else {
-    print "Nothing to post.";
+    $results = array('result' => 'fail', 'tweet' => $newTweet);
 }
 
+print json_encode($results);
 ?>
