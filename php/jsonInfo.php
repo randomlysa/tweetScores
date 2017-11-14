@@ -14,18 +14,22 @@ if ($mysqli->connect_error) {
 
 $gameid = $_GET["gameid"];
 
-$getGameInfo = $mysqli->query("SELECT `gameid`, `homeTeamName`, `awayTeamName`, `homeScore`, `awayScore` FROM tweetScores WHERE `gameid` = '$gameid'");
-$gameInfo = array();
+// Prepare statement.
+if ($getGameInfo = $mysqli->prepare("SELECT `gameid`, `homeTeamName`, `awayTeamName`, `homeScore`, `awayScore` FROM tweetScores WHERE `gameid` = ?")) {
+    $getGameInfo->bind_param('s', $gameid);
+    $getGameInfo->execute();
+    $getGameInfo->bind_result($gameid, $homeTeamName, $awayTeamName, $homeScore, $awayScore);
+    $getGameInfo->fetch();
+    $getGameInfo->close();
+}
 
 // https://stackoverflow.com/a/3563464
-while ($row = $getGameInfo->fetch_assoc()) {
-    $gameInfo[] = array(
-        'homeTeamName' => $row['homeTeamName'],
-        'awayTeamName' => $row['awayTeamName'],
-        'homeScore' => $row['homeScore'],
-        'awayScore' => $row['awayScore']
-    );
-}
+$gameInfo[] = array(
+    'homeTeamName' => $homeTeamName,
+    'awayTeamName' => $awayTeamName,
+    'homeScore' => $homeScore,
+    'awayScore' => $awayScore
+);
 
 print json_encode($gameInfo);
 

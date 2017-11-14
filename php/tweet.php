@@ -22,14 +22,15 @@ if ($mysqli->connect_error) {
     // print "Connected OK.";
 }
 
-$getTokenSecret = $mysqli->query("SELECT * FROM `tweetClients` WHERE `clientid` = '$clientid'");
+if ($getTokenSecret = $mysqli->prepare("SELECT `oauth_token`, `oauth_token_secret` FROM `tweetClients` WHERE `clientid` = ?")) {
+    $getTokenSecret->bind_param('s', $clientid);
+    $getTokenSecret->execute();
+    $getTokenSecret->bind_result($oauth_token, $token_secret);
+    $getTokenSecret->fetch();
+    $getTokenSecret->close();
+}
 if(!$getTokenSecret){
     die('Error : ('. $mysqli->errno .') '. $mysqli->error);
-}
-
-while ($row = $getTokenSecret->fetch_assoc()) {
-    $oauth_token  = $row['oauth_token'];
-    $token_secret = $row['oauth_token_secret'];
 }
 
 $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $oauth_token, $token_secret);

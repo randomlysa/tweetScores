@@ -36,13 +36,23 @@ require('config.php');
 // Connect.
 $mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DBNAME);
 
-// Check if clientid exists.
-$checkClientId = $mysqli->query("SELECT * FROM tweetClients WHERE `clientid` = '$clientid'");
+// Check if clientid exists in the database.
+// This is to save auth token / token secret for the clientid.
+// At this point, clientid should be pretty safe since it's a sha1 of the token and secret returned from twitter.
+
+// Prepare statment.
+if ($checkClientId = $mysqli->prepare("SELECT `clientid` FROM tweetClients WHERE `clientid` = ?")) {
+    $checkClientId->bind_param('s', $clientid);
+    $checkClientId->execute();
+    // $checkClientId->bind_result($oauth_token, $token_secret);
+    $checkClientId->store_result();
+    $doesClientIDExist = $checkClientId->num_rows;
+    $checkClientId->close();
+}
+
 if(!$checkClientId){
     die('Error : ('. $mysqli->errno .') '. $mysqli->error);
 }
-
-$doesClientIDExist = $checkClientId->num_rows;
 
 // Client doesn't exist in DB. Save.
 if ($doesClientIDExist == 0) {
