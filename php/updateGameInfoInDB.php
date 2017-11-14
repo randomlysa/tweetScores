@@ -25,20 +25,39 @@ $awayScore = $_POST["awayScore"];
 
 
 // Check if gameid exists (determine insert or update.)
-$checkGameId = $mysqli->query("SELECT * FROM tweetScores WHERE `gameid` = $gameid");
-$doesGameIDExist = $checkGameId->num_rows;
+// Prepare succeeded.
+if ($checkGameId = $mysqli->prepare("SELECT * FROM tweetScores WHERE `gameid` = ?")) {
+    $checkGameId->bind_param('s', $gameid);
+    $checkGameId->execute();
+    $checkGameId->store_result();
+    $doesGameIDExist = $checkGameId->num_rows;
+    $checkGameId->close();
+}
 
+// Game doesn't exist. Create (insert).
 if ($doesGameIDExist == 0) {
-    $insert_row = $mysqli->query("INSERT INTO tweetScores(`gameid`, `clientid`, `homeTeamName`, `homeScore`, `awayTeamName`, `awayScore`) VALUES('$gameid', '$clientid', '$homeTeamName', '$homeScore', '$awayTeamName', '$awayScore')");
+    // Prepare succeeded.
+    if ($insert_row = $mysqli->prepare("INSERT INTO tweetScores(`gameid`, `clientid`, `homeTeamName`, `homeScore`, `awayTeamName`, `awayScore`) VALUES(?, ?, ?, ?, ?, ?)")) {
+        $insert_row->bind_param('ssssss', $gameid, $clientid, $homeTeamName, $homeScore, $awayTeamName, $awayScore);
+        $insert_row->execute();
+        $insert_row->close();
+    }
 
     if($insert_row){
         print $mysqli->insert_id;
     }else{
         die('Error : ('. $mysqli->errno .') '. $mysqli->error);
     }
+
+// Game exists. Update.
 } else {
-    $update_row = $mysqli->query("UPDATE tweetScores SET `homeTeamName` = '$homeTeamName', `homeScore` = '$homeScore', `awayTeamName` = '$awayTeamName', `awayScore` = '$awayScore' WHERE `gameid` = $gameid");
-}
+    // Prepare succeeded.
+    if ($update_row = $mysqli->prepare("UPDATE tweetScores SET `homeTeamName` = '$homeTeamName', `homeScore` = '$homeScore', `awayTeamName` = '$awayTeamName', `awayScore` = '$awayScore' WHERE `gameid` = ?")) {
+        $update_row->bind_param('s', $gameid);
+        $update_row->execute();
+        $update_row->close();
+    } // if prepare succeeded.
+} // else
 
 // Close connection.
 $mysqli->close();

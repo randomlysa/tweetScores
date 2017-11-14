@@ -46,9 +46,12 @@ $doesClientIDExist = $checkClientId->num_rows;
 
 // Client doesn't exist in DB. Save.
 if ($doesClientIDExist == 0) {
-    $saveInfo = $mysqli->query("INSERT INTO tweetClients(`clientid`, `oauth_token`, `oauth_token_secret`) VALUES('$clientid', '$access_token', '$token_secret')");
-    if($saveInfo){
-        // Don't do anything.
+    // Prepare succeeded.
+    if ($saveInfo = $mysqli->prepare("INSERT INTO tweetClients(`clientid`, `oauth_token`, `oauth_token_secret`) VALUES(?,?,?)")) {
+        $saveInfo->bind_param('sss', $clientid, $access_token, $token_secret);
+        $saveInfo->execute();
+        $saveInfo->close();
+    // Prepare failed.
     } else {
         die('Error : ('. $mysqli->errno .') '. $mysqli->error);
     }
