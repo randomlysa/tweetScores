@@ -1,0 +1,31 @@
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+CREATE TABLE IF NOT EXISTS `tweetClients` (
+  `uniqueid` int(11) NOT NULL,
+  `clientid` text COLLATE utf8_unicode_ci NOT NULL,
+  `oauth_token` text COLLATE utf8_unicode_ci NOT NULL,
+  `oauth_token_secret` text COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `tweetScores` (
+  `gameid` int(11) NOT NULL,
+  `clientid` text COLLATE utf8_unicode_ci NOT NULL,
+  `homeTeamName` text COLLATE utf8_unicode_ci NOT NULL,
+  `homeScore` int(11) NOT NULL,
+  `awayTeamName` text COLLATE utf8_unicode_ci NOT NULL,
+  `awayScore` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+ALTER TABLE `tweetClients`
+  ADD UNIQUE KEY `uniqueid` (`uniqueid`);
+
+ALTER TABLE `tweetScores`
+  ADD UNIQUE KEY `gameid` (`gameid`);
+
+
+ALTER TABLE `tweetClients`
+  MODIFY `uniqueid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+ALTER TABLE `tweetScores`
+AUTO_INCREMENT=7;
