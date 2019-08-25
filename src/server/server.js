@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const writeJson = require("write-json");
+const fs = require("fs");
 
 const app = express();
 const port = 3000;
@@ -21,6 +22,14 @@ app.post("/game/:gameId", (req, res) => {
 
 app.get("/game/:gameId/json", (req, res) => {
   console.log(req.params.gameId);
+  fs.readFile(`gameinfo-${req.params.gameId}.json`, "utf8", function(
+    err,
+    data
+  ) {
+    if (err) throw err;
+    console.log(data);
+    res.send(JSON.parse(data));
+  });
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
