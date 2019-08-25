@@ -21,15 +21,20 @@ app.post("/game/:gameId", (req, res) => {
 });
 
 app.get("/game/:gameId/json", (req, res) => {
-  console.log(req.params.gameId);
-  fs.readFile(`gameinfo-${req.params.gameId}.json`, "utf8", function(
-    err,
-    data
-  ) {
-    if (err) throw err;
-    console.log(data);
-    res.send(JSON.parse(data));
-  });
+  const pathToJSONFile = `gameinfo-${req.params.gameId}.json`;
+  try {
+    if (fs.existsSync(pathToJSONFile)) {
+      fs.readFile(pathToJSONFile, "utf8", function(err, data) {
+        if (err) res.send("Error getting JSON game info: ", err);
+        else res.send(JSON.parse(data));
+      });
+    } else {
+      res.send("Error getting JSON game info.");
+    }
+    // if fs.existsSync
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
