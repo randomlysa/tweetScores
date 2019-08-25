@@ -30,9 +30,9 @@ class Footer extends Component {
   }
 
   render(props) {
-    const jsonLink = `http://code.randomlysa.com/tweetScores/php/jsonInfo.php?gameid=${
+    const jsonLink = `http://localhost:3000/game/${
       this.props.teamsAndScores.gameid
-    }`;
+    }/json`;
 
     if (this.props.teamsAndScores.twitterAuth) {
       return (
