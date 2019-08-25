@@ -13,7 +13,6 @@ export function updateScore(teamId, scoreUpdate) {
 }
 
 export function updateTeamName(teamId, newTeamName) {
-  console.log(teamId, newTeamName);
   return {
     type: UPDATE_TEAM_NAME,
     payload: {
