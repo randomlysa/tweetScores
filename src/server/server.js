@@ -15,7 +15,7 @@ app.post("/game/:gameId", (req, res) => {
   console.log("12", req.params);
   writeJson(`gameinfo-${req.params.gameId}.json`, req.body.data, function(err) {
     if (err) console.log("Error writing gameinfo to json file: ", err);
-    else console.log(`Write successfu - ${req.params.gameId}`);
+    else console.log(`Write successful - ${req.params.gameId}`);
   });
 });
 
