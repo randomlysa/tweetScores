@@ -26,7 +26,8 @@ app.get("/game/:gameId/json", (req, res) => {
     if (fs.existsSync(pathToJSONFile)) {
       fs.readFile(pathToJSONFile, "utf8", function(err, data) {
         if (err) res.send("Error getting JSON game info: ", err);
-        else res.send(JSON.parse(data));
+        // vMix needs [ ] around JSON data.
+        else res.send("[" + JSON.parse(data) + "]");
       });
     } else {
       res.send("Error getting JSON game info.");
