@@ -5,7 +5,6 @@ import {
 } from "../actions/index";
 
 import { loadState, saveState } from "../manageLocalStorage";
-import $ from "jquery";
 
 let initialState;
 
