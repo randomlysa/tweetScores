@@ -32,7 +32,7 @@ class TeamAndScore extends Component {
 
   componentDidMount() {}
 
-  render(props) {
+  render() {
     let teamName = this.props.teamName;
     let teamId = this.props.teamId;
     let tabIndex;

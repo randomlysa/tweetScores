@@ -30,7 +30,7 @@ class Footer extends Component {
       });
   }
 
-  render(props) {
+  render() {
     const jsonLink = `${serverAddress}/game/${this.props.teamsAndScores.gameid}/json`;
 
     if (this.props.teamsAndScores.twitterAuth) {
