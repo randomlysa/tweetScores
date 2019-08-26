@@ -25,6 +25,11 @@ class TeamAndScore extends Component {
     }, 2000);
   };
 
+  updateScoreAndJSON = (teamId, data) => {
+    this.props.actions.updateScore(teamId, data);
+    this.props.actions.updateJSON();
+  };
+
   componentDidMount() {}
 
   render(props) {
@@ -58,35 +63,25 @@ class TeamAndScore extends Component {
         </h2>
         <h2>Score: {score}</h2>
 
-        <button
-          onClick={this.props.actions.updateScore.bind(this, teamId, "+2")}
-        >
+        <button onClick={this.updateScoreAndJSON.bind(this, teamId, "+2")}>
           +2
         </button>
 
-        <button
-          onClick={this.props.actions.updateScore.bind(this, teamId, "+3")}
-        >
+        <button onClick={this.updateScoreAndJSON.bind(this, teamId, "+3")}>
           +3
         </button>
 
-        <button
-          onClick={this.props.actions.updateScore.bind(this, teamId, "+1")}
-        >
+        <button onClick={this.updateScoreAndJSON.bind(this, teamId, "+1")}>
           +1
         </button>
 
         <br />
 
-        <button
-          onClick={this.props.actions.updateScore.bind(this, teamId, "-1")}
-        >
+        <button onClick={this.updateScoreAndJSON.bind(this, teamId, "-1")}>
           -1
         </button>
 
-        <button
-          onClick={this.props.actions.updateScore.bind(this, teamId, "-2")}
-        >
+        <button onClick={this.updateScoreAndJSON.bind(this, teamId, "-2")}>
           -2
         </button>
       </div>
