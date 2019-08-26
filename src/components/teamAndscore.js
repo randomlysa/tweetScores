@@ -9,11 +9,20 @@ class TeamAndScore extends Component {
     super(props);
 
     this.updateTeamName = this.updateTeamName.bind(this);
+    // https://stackoverflow.com/a/44212683
+    this.timeout = 0;
   }
 
   updateTeamName = e => {
     this.props.actions.updateTeamName(this.props.teamId, e.target.value);
-    console.log(e.target.value);
+
+    if (this.timeout) clearTimeout(this.timeout);
+
+    // Node server couldn't handle being updated on every keypress for a teamname.
+    this.timeout = setTimeout(() => {
+      // Update team names, user has stopped typing for x ms.
+      this.props.actions.updateJSON();
+    }, 2000);
   };
 
   componentDidMount() {}
