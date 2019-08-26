@@ -1,10 +1,12 @@
 import {
   UPDATE_SCORE,
   UPDATE_TEAM_NAME,
-  UNAUTH_TWITTER
+  UNAUTH_TWITTER,
+  UPDATE_JSON
 } from "../actions/index";
 
 import { loadState, saveState } from "../manageLocalStorage";
+import axios from "axios";
 
 let initialState;
 
@@ -65,6 +67,14 @@ export default function(state = initialState, action) {
       newState = { ...state, twitterAuth: false };
       saveState(newState);
       return newState;
+
+    case UPDATE_JSON:
+      const serializedState = JSON.stringify(state);
+      // Write game info to file so it can be loaded as a json file using express.
+      axios.post(`http://localhost:3000/game/${state.gameid}`, {
+        data: serializedState
+      });
+      return state;
 
     default:
       return state;
