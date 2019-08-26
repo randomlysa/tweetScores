@@ -17,10 +17,6 @@ export const saveState = score => {
   try {
     const serializedState = JSON.stringify(score);
     localStorage.setItem("score", serializedState);
-    // Write game info to file so it can be loaded as a json file using express.
-    axios.post(`http://localhost:3000/game/${score.gameid}`, {
-      data: serializedState
-    });
   } catch (err) {
     // Ignore write errors.
   }
