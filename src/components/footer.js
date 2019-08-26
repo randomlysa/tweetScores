@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actionCreators from "../actions";
 import $ from "jquery";
+import { serverAddress } from "../config";
 
 class Footer extends Component {
   sendTweet(props) {
@@ -30,9 +31,7 @@ class Footer extends Component {
   }
 
   render(props) {
-    const jsonLink = `http://localhost:3000/game/${
-      this.props.teamsAndScores.gameid
-    }/json`;
+    const jsonLink = `${serverAddress}/game/${this.props.teamsAndScores.gameid}/json`;
 
     if (this.props.teamsAndScores.twitterAuth) {
       return (

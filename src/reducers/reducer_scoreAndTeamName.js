@@ -7,6 +7,7 @@ import {
 
 import { loadState, saveState } from "../manageLocalStorage";
 import axios from "axios";
+import { serverAddress } from "../config";
 
 let initialState;
 
@@ -71,7 +72,7 @@ export default function(state = initialState, action) {
     case UPDATE_JSON:
       const serializedState = JSON.stringify(state);
       // Write game info to file so it can be loaded as a json file using express.
-      axios.post(`http://localhost:3000/game/${state.gameid}`, {
+      axios.post(`${serverAddress}/game/${state.gameid}`, {
         data: serializedState
       });
       return state;
