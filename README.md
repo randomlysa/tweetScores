@@ -21,7 +21,3 @@ A very generalized getting started...
 
 ### Notes
 Team name is not written to the database until a score is updated.
-
-
-### Todo
-Clientid is not updated in the database if game starts, then user authorizes with twitter.
