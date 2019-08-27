@@ -1,88 +1,85 @@
 import {
-    UPDATE_SCORE,
-    UPDATE_TEAM_NAME,
-    UNAUTH_TWITTER
-} from '../actions/index';
+  UPDATE_SCORE,
+  UPDATE_TEAM_NAME,
+  UNAUTH_TWITTER,
+  UPDATE_JSON
+} from "../actions/index";
 
-import { loadState, saveState } from '../manageLocalStorage';
-import $ from 'jquery';
+import { loadState, saveState } from "../manageLocalStorage";
+import axios from "axios";
+import { serverAddress } from "../config";
 
 let initialState;
 
 // No state in local storage, use default.
 if (!loadState()) {
+  const gameid = Math.floor(Math.random() * 123456799);
+  let checkTwitterAuth = localStorage.getItem("tweetScoreClientId");
+  if (!checkTwitterAuth) {
+    checkTwitterAuth = false;
+  }
 
-    const gameid = Math.floor(Math.random()*123456799);
-    let checkTwitterAuth = localStorage.getItem('tweetScoreClientId');
-    if (!checkTwitterAuth) {
-        checkTwitterAuth = false;
-    }
-
-    initialState = {
-        twitterAuth: checkTwitterAuth,
-        gameid: gameid,
-        homeTeamName: 'Home Team',
-        awayTeamName: 'Away Team',
-        homeScore: 0,
-        awayScore: 0
-    }
-// Otherwise use state from local storage.
+  initialState = {
+    twitterAuth: checkTwitterAuth,
+    gameid: gameid,
+    homeTeamName: "Home Team",
+    awayTeamName: "Away Team",
+    homeScore: 0,
+    awayScore: 0
+  };
+  // Otherwise use state from local storage.
 } else {
-    initialState = loadState();
+  initialState = loadState();
 }
 
 export default function(state = initialState, action) {
-    let newState;
+  let newState;
 
-    switch (action.type) {
-        case UPDATE_SCORE:
-            let homeScore = state.homeScore;
-            let awayScore = state.awayScore;
+  switch (action.type) {
+    case UPDATE_SCORE:
+      let homeScore = state.homeScore;
+      let awayScore = state.awayScore;
 
-            if (action.payload.teamId === "home") {
-                let newHomeScore = homeScore + parseInt(action.payload.score);
-                newState = { ...state, homeScore: newHomeScore };
-            }
+      if (action.payload.teamId === "home") {
+        let newHomeScore = homeScore + parseInt(action.payload.score);
+        newState = { ...state, homeScore: newHomeScore };
+      }
 
-            if (action.payload.teamId === "away") {
-                let newAwayScore = awayScore + parseInt(action.payload.score);
-                newState = { ...state, awayScore: newAwayScore };
-            }
+      if (action.payload.teamId === "away") {
+        let newAwayScore = awayScore + parseInt(action.payload.score);
+        newState = { ...state, awayScore: newAwayScore };
+      }
 
-            $.ajax({
-                type: "POST",
-                url: 'http://code.randomlysa.com/tweetScores/php/updateGameInfoInDB.php',
-                data: newState
-              })
-              .then(function (response) {
-                console.log(response);
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
+      saveState(newState);
+      return newState;
 
-            saveState(newState)
-            return newState;
+    case UPDATE_TEAM_NAME:
+      if (action.payload.teamId === "home") {
+        newState = { ...state, homeTeamName: action.payload.newTeamName };
+      }
+      if (action.payload.teamId === "away") {
+        newState = { ...state, awayTeamName: action.payload.newTeamName };
+      }
 
-        case UPDATE_TEAM_NAME:
-            if (action.payload.teamId === "home") {
-                newState = { ...state, homeTeamName: action.payload.newTeamName }
-            }
-            if (action.payload.teamId === "away") {
-                newState = { ...state, awayTeamName: action.payload.newTeamName }
-            }
+      saveState(newState);
+      return newState;
 
-            saveState(newState)
-            return newState;
+    case UNAUTH_TWITTER:
+      newState = { ...state, twitterAuth: false };
+      saveState(newState);
+      return newState;
 
-        case UNAUTH_TWITTER:
-            newState =  { ...state, twitterAuth: false };
-            saveState(newState);
-            return newState;
+    case UPDATE_JSON:
+      const serializedState = JSON.stringify(state);
+      // Write game info to file so it can be loaded as a json file using express.
+      axios.post(`${serverAddress}/game/${state.gameid}`, {
+        data: serializedState
+      });
+      return state;
 
-        default:
-            return state
-    }
+    default:
+      return state;
+  }
 
-    return state;
+  return state;
 }
